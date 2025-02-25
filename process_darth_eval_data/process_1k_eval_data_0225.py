@@ -29,7 +29,7 @@ def main():
             if arxiv_fail_count > 20:
                 continue
             res.append(curr)
-            if len(res) > 1000:
+            if len(res) > 2000:
                 break
     with open("../local_data/sample_1k_eval_data_0225.json", "w") as fo:
         fo.write(json.dumps(res, indent=4))
