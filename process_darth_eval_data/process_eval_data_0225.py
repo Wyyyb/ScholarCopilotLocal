@@ -100,8 +100,9 @@ def main():
     for each in data:
         single_res = single_process(each)
         res_data.append(single_res)
+    print("len(res_data)", len(res_data))
     with open(output_path, "w") as fo:
-        fo.write(json.dumps(res_data, indent=4))
+        fo.write(json.dumps(res_data[:1000], indent=4))
 
 
 def test():
