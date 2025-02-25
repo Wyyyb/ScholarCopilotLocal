@@ -3,8 +3,8 @@ from tqdm import tqdm
 
 
 def main():
-    # input_data_path = "/data/yubowang/arxiv-llm/local_1123/step_5_integration_1123.jsonl"
-    input_data_path = "/data/yubowang/arxiv-llm/local_1123/test_step_5.jsonl"
+    input_data_path = "/data/yubowang/arxiv-llm/local_1123/step_5_integration_1123.jsonl"
+    # input_data_path = "/data/yubowang/arxiv-llm/local_1123/test_step_5.jsonl"
     res = []
     with open(input_data_path, "r") as fi:
         for line in tqdm(fi):
