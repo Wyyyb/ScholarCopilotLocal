@@ -16,7 +16,7 @@ def main():
                 continue
             bib_info_map = {}
             for k, v in bib_info.items():
-                if v["citation_corpus_id"].startswith("arxiv-"):
+                if v["citation_corpus_id"] and v["citation_corpus_id"].startswith("arxiv-"):
                     bib_info_map[k] = v
                     arxiv_success_count += 1
             curr["bib_info"] = bib_info_map
