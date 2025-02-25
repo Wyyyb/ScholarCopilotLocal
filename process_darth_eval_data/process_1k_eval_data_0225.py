@@ -26,7 +26,7 @@ def main():
             curr["bib_info"] = bib_info_map
             if arxiv_success_count < 20:
                 continue
-            if arxiv_fail_count > 20:
+            if arxiv_fail_count > 10:
                 continue
             res.append(curr)
             if len(res) > 2000:
