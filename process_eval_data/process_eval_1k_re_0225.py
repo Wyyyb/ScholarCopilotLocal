@@ -25,7 +25,7 @@ def process_single(each, corpus_map):
     cite_map = json.loads(each["cite_corpus_id_map"])
     citation_list = convert_cite_map_to_sorted_list(cite_map)
     if paper.count("<|cite_start|>") != len(citation_list):
-        print("inconsistent paper citation info")
+        print("inconsistent paper citation info", paper.count("<|cite_start|>"), len(citation_list))
         return None
     citation_index = 0
     valid_citation_index = 0
@@ -38,11 +38,11 @@ def process_single(each, corpus_map):
         ori_cite_index = cite_info[0]
         if cite_info[-1].startswith("arxiv-"):
             if cite_info[-1] not in corpus_map:
-                print("fatal error, cite_info[-1] not in corpus_map", cite_info[-1])
+                # print("fatal error, cite_info[-1] not in corpus_map", cite_info[-1])
                 return None
             title = corpus_map[cite_info[-1]]["title"]
             if title not in reference:
-                print("fatal error, title not in reference", title, reference)
+                # print("fatal error, title not in reference", title, reference)
                 return None
             if cite_info[1] == 0:
                 placeholder = f"<|cite_{str(ori_cite_index)}|>"
