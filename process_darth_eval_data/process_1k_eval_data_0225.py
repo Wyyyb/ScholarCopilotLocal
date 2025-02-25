@@ -12,15 +12,21 @@ def main():
             bib_info = curr["bib_info"]
             paper = curr["full_intro"]
             arxiv_success_count = 0
+            arxiv_fail_count = 0
             if len(paper) > 100000:
+                print("len(paper)", len(paper) )
                 continue
             bib_info_map = {}
             for k, v in bib_info.items():
                 if v["citation_corpus_id"] and v["citation_corpus_id"].startswith("arxiv-"):
                     bib_info_map[k] = v
                     arxiv_success_count += 1
+                else:
+                    arxiv_fail_count += 1
             curr["bib_info"] = bib_info_map
-            if arxiv_success_count < 2:
+            if arxiv_success_count < 20:
+                continue
+            if arxiv_fail_count > 20:
                 continue
             res.append(curr)
             if len(res) > 1000:
