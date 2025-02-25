@@ -13,8 +13,8 @@ def main():
             paper = curr["full_intro"]
             arxiv_success_count = 0
             arxiv_fail_count = 0
-            if len(paper) > 100000:
-                print("len(paper)", len(paper) )
+            if len(paper) > 100000 or len(paper) < 20000:
+                print("len(paper)", len(paper))
                 continue
             bib_info_map = {}
             for k, v in bib_info.items():
@@ -26,7 +26,7 @@ def main():
             curr["bib_info"] = bib_info_map
             if arxiv_success_count < 20:
                 continue
-            if arxiv_fail_count > 5:
+            if arxiv_fail_count > 2:
                 continue
             res.append(curr)
             if len(res) > 2000:
