@@ -14,7 +14,7 @@ def main():
             arxiv_success_count = 0
             arxiv_fail_count = 0
             if len(paper) > 100000 or len(paper) < 5000:
-                print("len(paper)", len(paper))
+                # print("len(paper)", len(paper))
                 continue
             bib_info_map = {}
             for k, v in bib_info.items():
