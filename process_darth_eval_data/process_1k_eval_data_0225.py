@@ -33,6 +33,7 @@ def main():
                 break
     with open("../local_data/sample_1k_eval_data_0225.json", "w") as fo:
         fo.write(json.dumps(res, indent=4))
+    print("len(res)", len(res))
     with open("../local_data/sample_1k_eval_data_0225_test.json", "w") as fo:
         fo.write(json.dumps(res[:20], indent=4))
 
