@@ -1,0 +1,35 @@
+import json
+from tqdm import tqdm
+
+
+def main():
+    # input_data_path = "/data/yubowang/arxiv-llm/local_1123/step_5_integration_1123.jsonl"
+    input_data_path = "/data/yubowang/arxiv-llm/local_1123/test_step_5.jsonl"
+    res = []
+    with open(input_data_path, "r") as fi:
+        for line in tqdm(fi):
+            curr = json.loads(line)
+            bib_info = curr["bib_info"]
+            paper = curr["full_intro"]
+            arxiv_success_count = 0
+            if len(paper) > 100000:
+                continue
+            bib_info_map = {}
+            for k, v in bib_info.items():
+                if v["citation_corpus_id"].startswith("arxiv-"):
+                    bib_info_map[k] = v
+                    arxiv_success_count += 1
+            curr["bib_info"] = bib_info_map
+            if arxiv_success_count < 2:
+                continue
+            res.append(curr)
+            if len(res) > 1000:
+                break
+    with open("../local_data/sample_1k_eval_data_0225.json") as fo:
+        fo.write(json.dumps(res, indent=4))
+
+
+main()
+
+
+
