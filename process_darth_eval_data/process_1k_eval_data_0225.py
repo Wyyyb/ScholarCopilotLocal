@@ -25,7 +25,7 @@ def main():
             res.append(curr)
             if len(res) > 1000:
                 break
-    with open("../local_data/sample_1k_eval_data_0225.json") as fo:
+    with open("../local_data/sample_1k_eval_data_0225.json", "w") as fo:
         fo.write(json.dumps(res, indent=4))
 
 
