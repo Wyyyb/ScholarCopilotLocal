@@ -26,14 +26,15 @@ def main():
             curr["bib_info"] = bib_info_map
             if arxiv_success_count < 20:
                 continue
-            if arxiv_fail_count > 2:
+            if arxiv_fail_count > 1:
                 continue
             res.append(curr)
             if len(res) > 2000:
                 break
     with open("../local_data/sample_1k_eval_data_0225.json", "w") as fo:
         fo.write(json.dumps(res, indent=4))
-
+    with open("../local_data/sample_1k_eval_data_0225_test.json", "w") as fo:
+        fo.write(json.dumps(res[:20], indent=4))
 
 main()
 
