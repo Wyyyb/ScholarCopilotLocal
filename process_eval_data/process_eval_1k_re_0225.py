@@ -20,7 +20,7 @@ def convert_cite_map_to_sorted_list(cite_map):
 
 def process_single(each, corpus_map):
     res = {}
-    arxiv_id = each["arxiv-id"]
+    arxiv_id = each["arxiv_id"]
     paper = each["paper"]
     cite_map = each["cite_corpus_id_map"]
     citation_list = convert_cite_map_to_sorted_list(cite_map)
