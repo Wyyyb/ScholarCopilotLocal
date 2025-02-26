@@ -72,5 +72,7 @@ def eval_sc_generate():
             fo.write(json.dumps(res, indent=4))
 
 
-eval_sc_generate()
+if __name__ == "__main__":
+    eval_sc_generate()
+
 

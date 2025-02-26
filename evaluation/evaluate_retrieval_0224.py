@@ -143,9 +143,6 @@ def load_sc_model():
     return model, tokenizer, device, meta_data, citation_map_data, index, lookup_indices
 
 
-def main():
+if __name__ == "__main__":
     eval_sc_retrieval()
-
-
-main()
 
