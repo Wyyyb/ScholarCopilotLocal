@@ -74,7 +74,8 @@ def load_exist_res(output_path):
 
 
 def eval_sc_generate():
-    output_path = "../data/eval_generation_result_0226.json"
+    # output_path = "../data/eval_generation_result_0226_8k.json"
+    output_path = "../data/eval_generation_result_0226_12k.json"
     model_info = load_sc_model()
     eval_data = load_eval_data()
     exist_ids, res = load_exist_res(output_path)
