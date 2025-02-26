@@ -80,6 +80,7 @@ def eval_sc_generate():
     exist_ids, res = load_exist_res(output_path)
     for each in tqdm(eval_data):
         if each["paper_id"] in exist_ids:
+            print("skipping", each["paper_id"])
             continue
         input_text = format_input_text(each)
         result_text = sc_generate(model_info, input_text)
