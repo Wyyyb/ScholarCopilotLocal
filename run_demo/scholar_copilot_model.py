@@ -340,6 +340,8 @@ def load_model(model_path, device):
                       '<|reference_end|>']
     tokenizer.add_tokens(special_tokens)
     model.resize_token_embeddings(len(tokenizer))
+    tokenizer.pad_token = tokenizer.eos_token
+    model.config.pad_token_id = model.config.eos_token_id
     return model, tokenizer
 
 
