@@ -89,7 +89,7 @@ def single_generate_full(model, tokenizer, device, input_text):
     # print("stop_token_ids", stop_token_ids)
     eos_token_id = stop_token_ids[0]
 
-    max_new_tokens = 4096
+    max_new_tokens = 16000
     with torch.no_grad():
         output = model.generate(
             inputs.input_ids,
