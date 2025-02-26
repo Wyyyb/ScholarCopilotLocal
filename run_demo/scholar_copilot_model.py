@@ -115,7 +115,7 @@ def single_generate_full(model, tokenizer, device, input_text):
     cite_rep = new_output.hidden_states[-1][:, -1, :]
 
     new_content = generated_text
-    if "<|paper_end|>" in new_content and len(new_content) < 8000:
+    if "<|paper_end|>" in new_content and len(new_content) < 12000:
         end_index = new_content.index("<|paper_end|>")
         return generated_text[:end_index], "<|continue|>"
     elif "<|paper_end|>" in new_content and "related work" not in new_content.lower():
