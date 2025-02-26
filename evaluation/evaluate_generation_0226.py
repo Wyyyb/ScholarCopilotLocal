@@ -23,30 +23,33 @@ def sc_generate(model_info, text):
     current_text = preprocess_input_text(current_text)
     display_text = current_text.replace("<|paper_start|> ", "")
     curr_prefix_length = len(display_text)
-    current_text, cite_start_hidden_state = single_complete_step(model, tokenizer, device, current_text)
+    current_text, cite_start_hidden_state = single_generate_full(model, tokenizer, device, current_text)
     reference_id_list = []
     display_text, citation_data_list = replace_citations(current_text, reference_id_list, citation_map_data)
     curr_yield_text, yield_list = split_yield_list(display_text, curr_prefix_length)
-    for each in yield_list:
-        if "." in each and (each.endswith(".") or ".\n" in each):
-            sentence_num += 1
-            print("sentence_num: ", sentence_num, "each", each)
-        curr_yield_text += " " + each
-    curr_prefix_length = len(curr_yield_text)
+    # for each in yield_list:
+    #     if "." in each and (each.endswith(".") or ".\n" in each):
+    #         sentence_num += 1
+    #         print("sentence_num: ", sentence_num, "each", each)
+    #     curr_yield_text += " " + each
+    # curr_prefix_length = len(curr_yield_text)
     while cite_start_hidden_state is not None and not enough:
-        retrieved_k_results = retrieve_reference(index, lookup_indices, cite_start_hidden_state, top_k=1)
-        reference, curr_index = llm_rerank(retrieved_k_results, meta_data)
-        reference_id_list.append(curr_index)
-        current_text = current_text + reference
-        current_text, cite_start_hidden_state = single_complete_step(model, tokenizer, device, current_text)
+        if cite_start_hidden_state == "<|continue|>":
+            current_text = current_text
+        else:
+            retrieved_k_results = retrieve_reference(index, lookup_indices, cite_start_hidden_state, top_k=1)
+            reference, curr_index = llm_rerank(retrieved_k_results, meta_data)
+            reference_id_list.append(curr_index)
+            current_text = current_text + reference
+        current_text, cite_start_hidden_state = single_generate_full(model, tokenizer, device, current_text)
         display_text, citation_data_list = replace_citations(current_text, reference_id_list, citation_map_data)
         curr_yield_text, yield_list = split_yield_list(display_text, curr_prefix_length)
-        for each in yield_list:
-            if "." in each and (each.endswith(".") or ".\n" in each):
-                sentence_num += 1
-                print("sentence_num: ", sentence_num, "each", each)
-            curr_yield_text += " " + each
-        curr_prefix_length = len(curr_yield_text)
+        # for each in yield_list:
+        #     if "." in each and (each.endswith(".") or ".\n" in each):
+        #         sentence_num += 1
+        #         print("sentence_num: ", sentence_num, "each", each)
+        #     curr_yield_text += " " + each
+        # curr_prefix_length = len(curr_yield_text)
     display_text, citation_data_list = post_process_output_text(display_text, reference_id_list, citation_map_data)
     return display_text
 
@@ -54,7 +57,7 @@ def sc_generate(model_info, text):
 def format_input_text(item):
     title = item["title"]
     abstract = item["abstract"].replace("<|reference_start|>", "").replace("<|reference_end|>", "")
-    format_text = f"Title:\n{title}\n\nAbstract:\n{abstract}\n\nIntroduction:\n"
+    format_text = f"Title:\n{title}\n\nAbstract:\n{abstract}\n\nIntroduction\n"
     return format_text
 
 
