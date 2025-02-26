@@ -13,7 +13,7 @@ import time
 
 def retrieve_reference(index, lookup_indices, cite_start_hidden_state, top_k=5):
     start = time.time()
-    print("Retrieving reference")
+    # print("Retrieving reference")
 
     # if isinstance(encoded_corpus, torch.Tensor):
     #     encoded_corpus = encoded_corpus.cpu().numpy()
@@ -29,12 +29,12 @@ def retrieve_reference(index, lookup_indices, cite_start_hidden_state, top_k=5):
 
     for i in indices[0]:
         each_index = str(lookup_indices[i], 'ascii')
-        print("index is ", each_index)
+        # print("index is ", each_index)
         retrieved_indices.append(each_index)
 
-    print("retrieved_indices", retrieved_indices)
-    print("distances[0]", distances[0])
-    print("***************Retrieve cost time: ", time.time() - start)
+    # print("retrieved_indices", retrieved_indices)
+    # print("distances[0]", distances[0])
+    # print("***************Retrieve cost time: ", time.time() - start)
     return list(zip(retrieved_indices, distances[0]))
 
 

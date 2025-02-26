@@ -32,6 +32,7 @@ def single_eval_sc(model_info, eval_item, top_k=10):
         gt = []
         for each in v:
             gt.append(each["citation_corpus_id"])
+        print("gt", gt)
         start_index = paper_text.index(k)
         input_text = paper_text[:start_index]
         citations = generate_citation(model_info, input_text, top_k=top_k)
@@ -83,10 +84,11 @@ def generate_citation(model_info, input_text, top_k):
             print("index not found in meta_data", curr_index)
             continue
         paper_id = meta_data[curr_index]["paper_id"]
-        # print("paper_id", paper_id)
+        print("paper_id", paper_id)
         citation_info = citation_map_data[paper_id]
         # print("generate_citation citation_info", citation_info)
-        searched_citations.append(citation_info)
+        # searched_citations.append(citation_info)
+        searched_citations.append(paper_id)
     return searched_citations
 
 
