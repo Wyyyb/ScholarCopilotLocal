@@ -53,6 +53,7 @@ def sc_generate(model_info, text):
         #     curr_yield_text += " " + each
         # curr_prefix_length = len(curr_yield_text)
     display_text, citation_data_list = post_process_output_text(display_text, reference_id_list, citation_map_data)
+    print("post citation_data_list", citation_data_list)
     return display_text, citation_data_list
 
 
@@ -88,6 +89,7 @@ def eval_sc_generate():
         input_text = format_input_text(each)
         result_text, citation_data_list = sc_generate(model_info, input_text)
         each["citation_data_list"] = citation_data_list
+        print("final citation_data_list", citation_data_list)
         each["sc_generated_text"] = result_text
         res.append(each)
         with open(output_path, "w") as fo:
