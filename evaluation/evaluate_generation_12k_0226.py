@@ -50,7 +50,7 @@ def sc_generate(model_info, text):
         #         print("sentence_num: ", sentence_num, "each", each)
         #     curr_yield_text += " " + each
         # curr_prefix_length = len(curr_yield_text)
-    display_text, citation_data_list = post_process_output_text(display_text, reference_id_list, citation_map_data)
+    display_text, post_citation_data_list = post_process_output_text(display_text, reference_id_list, citation_map_data)
     return display_text, citation_data_list
 
 
