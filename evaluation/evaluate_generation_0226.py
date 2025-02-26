@@ -68,7 +68,7 @@ def load_exist_res(output_path):
     with open(output_path, "r") as fi:
         res = json.load(fi)
     for each in res:
-        if each["sc_generated_text"] > 5000:
+        if "sc_generated_text" in each:
             exist_ids.append(each["paper_id"])
     return exist_ids, res
 
