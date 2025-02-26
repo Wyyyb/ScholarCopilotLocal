@@ -72,5 +72,5 @@ def eval_sc_generate():
         fo.write(json.dumps(res, indent=4))
 
 
-main()
+eval_sc_generate()
 
