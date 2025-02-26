@@ -81,7 +81,7 @@ def single_complete_step(model, tokenizer, device, input_text):
 
 
 def single_generate_full(model, tokenizer, device, input_text):
-    print("completing sentence ...\n")
+    # print("completing sentence ...\n")
     inputs = tokenizer(input_text, return_tensors="pt").to(device)
     if len(inputs.input_ids[0]) > 15000:
         return input_text, None
