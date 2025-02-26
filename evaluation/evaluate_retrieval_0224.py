@@ -144,5 +144,6 @@ def load_sc_model():
 
 
 if __name__ == "__main__":
+    print("evaluating scholar copilot retrieval")
     eval_sc_retrieval()
 
