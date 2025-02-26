@@ -84,11 +84,11 @@ def generate_citation(model_info, input_text, top_k):
             print("index not found in meta_data", curr_index)
             continue
         paper_id = meta_data[curr_index]["paper_id"]
-        print("paper_id", paper_id)
+        # print("paper_id", paper_id)
         citation_info = citation_map_data[paper_id]
         # print("generate_citation citation_info", citation_info)
         # searched_citations.append(citation_info)
-        searched_citations.append(paper_id)
+        searched_citations.append(curr_index)
     return searched_citations
 
 
