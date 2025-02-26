@@ -1,5 +1,8 @@
 import json
 import torch
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from run_demo.scholar_copilot_model import *
 from tqdm import tqdm
 
