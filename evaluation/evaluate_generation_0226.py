@@ -68,8 +68,8 @@ def eval_sc_generate():
         result_text = sc_generate(model_info, input_text)
         each["sc_generated_text"] = result_text
         res.append(each)
-    with open(output_path, "w") as fo:
-        fo.write(json.dumps(res, indent=4))
+        with open(output_path, "w") as fo:
+            fo.write(json.dumps(res, indent=4))
 
 
 eval_sc_generate()
