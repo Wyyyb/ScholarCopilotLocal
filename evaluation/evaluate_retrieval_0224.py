@@ -111,7 +111,7 @@ def compute_overall(eval_res, top_k=10):
     return overall_res
 
 
-def eval_sc_model():
+def eval_sc_retrieval():
     output_path = "../data/eval_retrieve_result_0226.json"
     model_info = load_sc_model()
     eval_data = load_eval_data()
@@ -144,7 +144,7 @@ def load_sc_model():
 
 
 def main():
-    eval_sc_model()
+    eval_sc_retrieval()
 
 
 main()
