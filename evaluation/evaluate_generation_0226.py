@@ -61,12 +61,26 @@ def format_input_text(item):
     return format_text
 
 
+def load_exist_res(output_path):
+    exist_ids, res = [], []
+    if not os.path.exists(output_path):
+        return exist_ids, res
+    with open(output_path, "r") as fi:
+        res = json.load(fi)
+    for each in res:
+        if each["sc_generated_text"] and len(each["sc_generated_text"]) > 5000:
+            exist_ids.append(each["paper_id"])
+    return exist_ids, res
+
+
 def eval_sc_generate():
     output_path = "../data/eval_generation_result_0226.json"
     model_info = load_sc_model()
     eval_data = load_eval_data()
-    res = []
+    exist_ids, res = load_exist_res(output_path)
     for each in tqdm(eval_data):
+        if each["paper_id"] in exist_ids:
+            continue
         input_text = format_input_text(each)
         result_text = sc_generate(model_info, input_text)
         each["sc_generated_text"] = result_text
