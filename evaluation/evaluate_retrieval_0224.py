@@ -34,7 +34,7 @@ def single_eval_sc(model_info, eval_item, top_k=10):
             if each["citation_corpus_id"].startswith("ss"):
                 print("gt not in meta data", each["citation_corpus_id"])
             gt.append(each["citation_corpus_id"])
-        print("gt", gt)
+        # print("gt", gt)
         start_index = paper_text.index(k)
         input_text = paper_text[:start_index]
         citations = generate_citation(model_info, input_text, top_k=top_k)
@@ -94,7 +94,7 @@ def generate_citation(model_info, input_text, top_k):
     return searched_citations
 
 
-def compute_overall(eval_res, top_k):
+def compute_overall(eval_res, top_k=10):
     overall_res = {}
     for tpk in range(top_k):
         right_count = 0.0
@@ -117,11 +117,16 @@ def eval_sc_model():
     eval_data = load_eval_data()
     res = []
     for each in tqdm(eval_data):
+        start = time.time()
         single_res = single_eval_sc(model_info, each)
+        print("single costing time:", time.time() - start)
         res.append(single_res)
     overall_res = compute_overall(res)
+    print("overall_res", overall_res)
     with open(output_path, "w") as fo:
         fo.write(json.dumps(res, indent=4))
+    with open("../data/result_summary_0226.json", "w") as fo:
+        fo.write(json.dumps(overall_res, indent=4))
 
 
 def load_sc_model():
