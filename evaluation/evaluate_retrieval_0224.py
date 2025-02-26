@@ -58,6 +58,7 @@ def single_eval_sc(model_info, eval_item, top_k=10):
                                                 "wrong_count": wrong_count,
                                                 "accu": accu}
     eval_item["statistic"] = statistic
+    print("single statistic", statistic)
     return eval_item
 
 
@@ -77,14 +78,14 @@ def generate_citation(model_info, input_text, top_k):
     searched_citations = []
     for each in retrieved_k_results:
         curr_index, distance = each
-        print("index", curr_index)
+        # print("index", curr_index)
         if curr_index not in meta_data:
             print("index not found in meta_data", curr_index)
             continue
         paper_id = meta_data[curr_index]["paper_id"]
-        print("paper_id", paper_id)
+        # print("paper_id", paper_id)
         citation_info = citation_map_data[paper_id]
-        print("generate_citation citation_info", citation_info)
+        # print("generate_citation citation_info", citation_info)
         searched_citations.append(citation_info)
     return searched_citations
 
