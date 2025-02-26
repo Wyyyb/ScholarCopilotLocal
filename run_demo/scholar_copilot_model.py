@@ -80,7 +80,7 @@ def single_complete_step(model, tokenizer, device, input_text):
     return new_content, cite_rep
 
 
-def single_generate_full(model, tokenizer, device, input_text):
+def single_generate_full(model, tokenizer, device, input_text, length_limit=8000):
     # print("completing sentence ...\n")
     inputs = tokenizer(input_text, return_tensors="pt").to(device)
     if len(inputs.input_ids[0]) > 15000:
@@ -115,7 +115,7 @@ def single_generate_full(model, tokenizer, device, input_text):
     cite_rep = new_output.hidden_states[-1][:, -1, :]
 
     new_content = generated_text
-    if "<|paper_end|>" in new_content and len(new_content) < 12000:
+    if "<|paper_end|>" in new_content and len(new_content) < length_limit:
         end_index = new_content.index("<|paper_end|>")
         return generated_text[:end_index], "<|continue|>"
     elif "<|paper_end|>" in new_content and "related work" not in new_content.lower():

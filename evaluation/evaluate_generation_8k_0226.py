@@ -23,7 +23,7 @@ def sc_generate(model_info, text):
     current_text = preprocess_input_text(current_text)
     display_text = current_text.replace("<|paper_start|> ", "")
     curr_prefix_length = len(display_text)
-    current_text, cite_start_hidden_state = single_generate_full(model, tokenizer, device, current_text)
+    current_text, cite_start_hidden_state = single_generate_full(model, tokenizer, device, current_text, 8000)
     reference_id_list = []
     display_text, citation_data_list = replace_citations(current_text, reference_id_list, citation_map_data)
     curr_yield_text, yield_list = split_yield_list(display_text, curr_prefix_length)
@@ -41,7 +41,7 @@ def sc_generate(model_info, text):
             reference, curr_index = llm_rerank(retrieved_k_results, meta_data)
             reference_id_list.append(curr_index)
             current_text = current_text + reference
-        current_text, cite_start_hidden_state = single_generate_full(model, tokenizer, device, current_text)
+        current_text, cite_start_hidden_state = single_generate_full(model, tokenizer, device, current_text, 8000)
         display_text, citation_data_list = replace_citations(current_text, reference_id_list, citation_map_data)
         curr_yield_text, yield_list = split_yield_list(display_text, curr_prefix_length)
         # for each in yield_list:
@@ -74,9 +74,9 @@ def load_exist_res(output_path):
 
 
 def eval_sc_generate():
-    # output_path = "../data/eval_generation_result_0226_8k.json"
-    output_path = "../data/eval_generation_result_0226_12k.json"
-    model_info = load_sc_model()
+    output_path = "../data/eval_generation_result_0226_8k.json"
+    # output_path = "../data/eval_generation_result_0226_12k.json"
+    model_info = load_sc_model(device="0")
     eval_data = load_eval_data()
     exist_ids, res = load_exist_res(output_path)
     for each in tqdm(eval_data):

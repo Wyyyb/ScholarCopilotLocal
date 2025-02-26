@@ -129,9 +129,9 @@ def eval_sc_retrieval():
         fo.write(json.dumps(overall_res, indent=4))
 
 
-def load_sc_model():
+def load_sc_model(device="0"):
     model_path = "../model_v1208/"
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device(f"cuda:{device}" if torch.cuda.is_available() else "cpu")
     model, tokenizer = load_model(model_path, device)
     meta_data_path = "../data/corpus_data_arxiv_1215.jsonl"
     meta_data = load_meta_data(meta_data_path)
