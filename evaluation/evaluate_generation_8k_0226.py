@@ -84,7 +84,9 @@ def eval_sc_generate():
             print("skipping", each["paper_id"])
             continue
         input_text = format_input_text(each)
+        start = time.time()
         result_text, citation_data_list = sc_generate(model_info, input_text)
+        print("cost time:", time.time() - start)
         each["citation_data_list"] = citation_data_list
         each["sc_generated_text"] = result_text
         res.append(each)
