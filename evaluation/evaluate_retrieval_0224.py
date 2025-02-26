@@ -31,6 +31,8 @@ def single_eval_sc(model_info, eval_item, top_k=10):
     for k, v in bib_info.items():
         gt = []
         for each in v:
+            if each["citation_corpus_id"].startswith("ss"):
+                print("gt not in meta data", each["citation_corpus_id"])
             gt.append(each["citation_corpus_id"])
         print("gt", gt)
         start_index = paper_text.index(k)
