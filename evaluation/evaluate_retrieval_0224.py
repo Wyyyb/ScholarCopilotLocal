@@ -1,6 +1,6 @@
 import json
 import torch
-from ..run_demo.scholar_copilot_model import *
+from run_demo.scholar_copilot_model import *
 from tqdm import tqdm
 
 
