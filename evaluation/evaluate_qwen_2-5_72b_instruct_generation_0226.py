@@ -68,14 +68,13 @@ def format_prompt(title, abstract, reference_list):
     reference = ""
     for i, each in enumerate(reference_list):
         citation_key = each[0]
-        reference = each[1]
-        reference += f"reference {str(i+1)} key: {citation_key}\nreference {str(i+1)} content: {reference}\n\n"
+        citation_content = each[1]
+        reference += f"reference {str(i+1)} key: {citation_key}\nreference {str(i+1)} content: {citation_content}\n\n"
     return f"{initial_prompt}\nTitle: {title}\nAbstract: {abstract}\nReferences:\n{reference}\nIntroduction\n"
 
 
 def eval_qwen_generation(model_path):
     output_path = "../data/qwen_eval_generation_result_0228.json"
-    llm, sampling_params = load_vllm_model(model_path)
     eval_data = load_eval_data()
     eval_data = eval_data[:10]
     prompts = []
@@ -89,6 +88,7 @@ def eval_qwen_generation(model_path):
         random.shuffle(reference_list)
         prompts.append(format_prompt(title, abstract, reference_list))
     print("prompts[0]", prompts[0])
+    llm, sampling_params = load_vllm_model(model_path)
     model_outputs = batch_predict(llm, sampling_params, prompts)
     res = []
     if len(model_outputs) != len(eval_data):
