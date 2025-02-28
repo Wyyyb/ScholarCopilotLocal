@@ -84,8 +84,8 @@ def eval_qwen_generation(model_path):
         reference_list = []
         for k, item in each["bib_info"].items():
             for each_item in item:
-                reference_list.append([each_item["citation_key"], each_item["abstract"]])
-        reference_list = reference_list[:20]
+                reference_list.append([each_item["citation_key"], each_item["title"]])
+        # reference_list = reference_list[:20]
         random.shuffle(reference_list)
         prompts.append(format_prompt(title, abstract, reference_list))
     print("prompts[0]", prompts[0])
