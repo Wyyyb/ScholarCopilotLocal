@@ -101,4 +101,4 @@ def eval_qwen_generation(model_path):
 
 
 if __name__ == "__main__":
-    eval_qwen_generation("../models/Qwen2.5-72B-Instruct")
+    eval_qwen_generation("/map-vepfs/yubo/models/Qwen2.5-72B-Instruct")
