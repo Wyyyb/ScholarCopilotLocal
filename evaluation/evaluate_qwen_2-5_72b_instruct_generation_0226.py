@@ -76,7 +76,7 @@ def format_prompt(title, abstract, reference_list):
 def eval_qwen_generation(model_path):
     output_path = "../data/qwen_eval_generation_result_0228.json"
     eval_data = load_eval_data()
-    eval_data = eval_data[:10]
+    # eval_data = eval_data[:10]
     prompts = []
     for i, each in enumerate(eval_data):
         title = each["title"]
