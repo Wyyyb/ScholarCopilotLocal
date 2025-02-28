@@ -100,7 +100,9 @@ def single_generate_full(model, tokenizer, device, input_text, length_limit=8000
             temperature=0.6,
             eos_token_id=eos_token_id,
             output_hidden_states=True,
-            return_dict_in_generate=True
+            return_dict_in_generate=True,
+            repetition_penalty=1.2,
+            no_repeat_ngram_size=8
         )
     generated_text = tokenizer.decode(output.sequences[0], skip_special_tokens=False)
 
