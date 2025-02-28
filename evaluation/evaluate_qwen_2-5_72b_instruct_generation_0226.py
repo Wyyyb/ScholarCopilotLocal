@@ -66,10 +66,10 @@ def format_prompt(title, abstract, reference_list):
                      "along with some related references you might need. Please complete the introduction and " \
                      "related work sections of this paper."
     reference = ""
-    for each in reference_list:
+    for i, each in enumerate(reference_list):
         citation_key = each[0]
         reference = each[1]
-        reference += f"reference key: {citation_key}\nreference content: {reference}\n\n"
+        reference += f"reference {str(i+1)} key: {citation_key}\nreference {str(i+1)} content: {reference}\n\n"
     return f"{initial_prompt}\nTitle: {title}\nAbstract: {abstract}\nReferences:\n{reference}\nIntroduction\n"
 
 
@@ -81,7 +81,7 @@ def eval_qwen_generation(model_path):
     prompts = []
     for i, each in enumerate(eval_data):
         title = each["title"]
-        abstract = each["abstract"]
+        abstract = each["abstract"].replace("<|reference_start|>", "").replace("<|reference_end>", "")
         reference_list = []
         for k, item in each["bib_info"].items():
             for each_item in item:
