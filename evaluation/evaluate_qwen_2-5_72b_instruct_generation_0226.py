@@ -79,15 +79,16 @@ def eval_qwen_generation(model_path):
     eval_data = load_eval_data()
     eval_data = eval_data[:10]
     prompts = []
-    for each in eval_data:
+    for i, each in enumerate(eval_data):
         title = each["title"]
         abstract = each["abstract"]
         reference_list = []
-        for item in each["bib_info"]:
+        for k, item in each["bib_info"].items():
             for each_item in item:
                 reference_list.append([each_item["citation_key"], each_item["abstract"]])
         random.shuffle(reference_list)
         prompts.append(format_prompt(title, abstract, reference_list))
+    print("prompts[0]", prompts[0])
     model_outputs = batch_predict(llm, sampling_params, prompts)
     res = []
     if len(model_outputs) != len(eval_data):
