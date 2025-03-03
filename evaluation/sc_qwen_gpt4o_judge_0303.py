@@ -229,7 +229,7 @@ def extract_scores(gpt_response: str):
 
 
 if __name__ == "__main__":
-    input_path = "../local_data/eval_generation_result_unlimit_0228.json"
+    input_path = "../data/eval_generation_result_unlimit_0228.json"
     output_dir = "output_dir/"
     os.makedirs(output_dir, exist_ok=True)
     process_large_dataset(
