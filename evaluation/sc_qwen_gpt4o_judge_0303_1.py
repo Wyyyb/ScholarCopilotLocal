@@ -35,7 +35,7 @@ def process_chunk(start_idx: int,
 
     for item in tqdm(chunk_data, desc=f'Process {process_id}'):
         if item['paper_id'] in existing_results:
-            results.append(existing_results[item['id']])
+            results.append(existing_results[item['paper_id']])
             continue
 
         try:
