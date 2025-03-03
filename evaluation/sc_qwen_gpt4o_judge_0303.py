@@ -51,6 +51,9 @@ def process_chunk(start_idx: int,
             )
             item['model_output'] = completion.choices[0].message.content
             item["score"] = extract_scores(item['model_output'])
+            if item["score"] is None:
+                print("extracting scores failed")
+                continue
             item['cost'] = completion.usage.completion_tokens * 10 / 1e6 + completion.usage.prompt_tokens * 2.5 / 1e6
             results.append(item)
 
@@ -213,6 +216,9 @@ def extract_scores(gpt_response: str):
     """
     try:
         # Extract the scores section
+        if "[Scores]" not in gpt_response:
+            gpt_response = gpt_response.replace("### Scores", "[Scores]")
+            print("found another [Scores]")
         scores_section = gpt_response.split("[Scores]")[1].split("[End Scores]")[0].strip()
 
         # Parse individual scores
