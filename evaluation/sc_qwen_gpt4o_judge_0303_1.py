@@ -80,7 +80,7 @@ def process_large_dataset(input_path: str,
     with open(input_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
         # for test
-        data = data[:50]
+        # data = data[:50]
         total_items = len(data)
     print("len(data)", len(data))
     # add idx
