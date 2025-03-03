@@ -237,10 +237,10 @@ def extract_scores(gpt_response: str):
 
 
 if __name__ == "__main__":
-    input_path = "../data/eval_generation_result_unlimit_0228.json"
-    output_dir = "sc_ul_output/"
-    # input_path = "../data/qwen_eval_generation_result_0229.json"
-    # output_dir = "qwen_72b_output/"
+    # input_path = "../data/eval_generation_result_unlimit_0228.json"
+    # output_dir = "sc_ul_output/"
+    input_path = "../data/qwen_eval_generation_result_0229.json"
+    output_dir = "qwen_72b_output/"
     os.makedirs(output_dir, exist_ok=True)
     process_large_dataset(
         input_path=input_path,
