@@ -57,7 +57,7 @@ def process_chunk(start_idx: int,
             item['cost'] = completion.usage.completion_tokens * 10 / 1e6 + completion.usage.prompt_tokens * 2.5 / 1e6
             results.append(item)
 
-            if len(results) % 10 == 0:
+            if len(results) % 2 == 0:
                 with open(output_file, 'w', encoding='utf-8') as f:
                     json.dump(results, f, ensure_ascii=False, indent=2)
 
@@ -227,7 +227,11 @@ def extract_scores(gpt_response: str):
             if ':' in line:
                 key, value = line.split(':')
                 # Extract the numeric score before the '/5'
-                score = float(value.strip().split('/')[0])
+                try:
+                    score = float(value.strip().split('/')[0])
+                except Exception as e:
+                    print("Error parsing", line, e)
+                    return None
                 scores[key.strip()] = score
 
         return scores
