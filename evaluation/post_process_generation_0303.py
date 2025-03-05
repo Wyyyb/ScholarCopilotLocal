@@ -5,8 +5,10 @@ import os
 def main():
     # input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/qwen_72b_output"
     # output_path = "../data/qwen_72b_eval_result_0303.json"
-    input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/sc_ul_output"
-    output_path = "../data/sc_ul_eval_result_0303.json"
+    # input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/sc_ul_output"
+    # output_path = "../data/sc_ul_eval_result_0303.json"
+    input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/sc_2k_output"
+    output_path = "../data/sc_2k_eval_result_0303.json"
     input_data = []
     for file in os.listdir(input_dir):
         file_path = os.path.join(input_dir, file)
