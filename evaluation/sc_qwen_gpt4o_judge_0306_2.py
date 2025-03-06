@@ -250,7 +250,7 @@ if __name__ == "__main__":
         input_path=input_path,
         output_dir=output_dir,
         prompt_func=example_prompt_func,
-        num_processes=50
+        num_processes=2
     )
 
 
