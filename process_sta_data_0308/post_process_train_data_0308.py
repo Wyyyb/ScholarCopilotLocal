@@ -29,13 +29,36 @@ def load_train_data():
     return data
 
 
-def split_eval():
-    eval_data_path = ""
-    train_data_path = ""
+def load_eval_data():
+    with open("../data/eval_re_data_1k_0225.json", "r") as fi:
+        eval_data = json.load(fi)
+    return eval_data
+
+
+def filter_train_data(eval_data, train_data):
+    train_res_data = []
+    eval_id_list = []
+    for each in eval_data:
+        paper_id = each["paper_id"].split("-")[0]
+        eval_id_list.append(paper_id)
+    for each in train_data:
+        paper_id = each["paper_id"].split("-")[0]
+        if paper_id in eval_id_list:
+            continue
+        train_res_data.append(each)
+    return train_res_data
 
 
 def main():
+    train_data_output_path = "../data/scholar_copilot_train_data.json"
     train_data = load_train_data()
+    print("ori train data number", len(train_data))
+    eval_data = load_eval_data()
+    print("ori eval data number", len(eval_data))
+    train_res_data = filter_train_data(eval_data, train_data)
+    print("len(train_res_data)", len(train_res_data))
+    with open(train_data_output_path, "w") as fo:
+        fo.write(json.dumps(train_res_data, indent=4))
 
 
 main()
