@@ -42,7 +42,7 @@ def filter_train_data(eval_data, train_data):
         paper_id = each["paper_id"].split("-")[0]
         eval_id_list.append(paper_id)
     for each in train_data:
-        paper_id = each["paper_id"].split("-")[0]
+        paper_id = each["arxiv_id"].split("-")[0]
         if paper_id in eval_id_list:
             continue
         train_res_data.append(each)
