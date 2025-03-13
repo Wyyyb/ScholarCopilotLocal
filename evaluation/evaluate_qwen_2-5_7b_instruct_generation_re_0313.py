@@ -165,10 +165,11 @@ def single_item_eval(generation_model, retrieval_model, corpus_data, item):
     input_content = f"Title: {title}\n\nAbstract: {abstract}\n\nIntroduction\n"
     output_text = single_complete(generation_model, retrieval_model, corpus_data, input_content)
     input_content = input_content + output_text
-    while len(input_content) < 10000 and "<|end_section|>" not in output_text:
+    while "<|end_section|>" not in output_text:
         output_text = single_complete(generation_model, retrieval_model, corpus_data, input_content)
         input_content = input_content + output_text
         print("input_content", input_content)
+        s = input("enter")
     return input_content
 
 
