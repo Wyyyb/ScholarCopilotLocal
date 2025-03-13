@@ -207,7 +207,7 @@ def eval_qwen_generation(model_path):
         print("eval result:", output_text)
         eval_data[i]["model_output"] = output_text
         res.append(eval_data[i])
-        if len(res) % 10 == 0:
+        if len(res) % 1 == 0:
             with open(output_path, "w") as fo:
                 fo.write(json.dumps(res, indent=4))
 
