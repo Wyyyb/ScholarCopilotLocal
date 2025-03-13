@@ -59,7 +59,7 @@ def batch_predict(llm, sampling_params, prompts: List[str]) -> List[str]:
         for output in outputs:
             generated_text = output.outputs[0].text
             results.append(generated_text)
-        print("Generated", results)
+        # print("Generated", results)
         return results
     except Exception as e:
         print(f"Error during prediction: {str(e)}")
@@ -156,9 +156,11 @@ def single_item_eval(generation_model, retrieval_model, corpus_data, item):
     abstract = item["abstract"].replace("<|reference_start|>", "").replace("<|reference_end|>", "")
     input_content = f"Here is the paper:\n\nTitle: {title}\n\nAbstract: {abstract}\n\nIntroduction\n"
     output_text = single_complete(generation_model, retrieval_model, corpus_data, input_content)
+    input_content = input_content + output_text
     while len(input_content) < 10000 and "<|end_section|>" not in output_text:
         output_text = single_complete(generation_model, retrieval_model, corpus_data, input_content)
         input_content = input_content + output_text
+        print("input_content", input_content)
     start_index = input_content.index("Here is the paper:\n\nTitle: ") + len("Here is the paper:\n\n")
     generated_content = input_content[start_index:]
     return generated_content
