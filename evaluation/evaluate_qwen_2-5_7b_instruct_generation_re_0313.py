@@ -71,9 +71,8 @@ def format_prompt(existing_part):
                      "with the title, abstract, and a portion of a computer science paper. " \
                      "Please help me complete the introduction and related work sections of " \
                      "this paper. For any citations needed, please use <|citation|> as a " \
-                     "placeholder.Please pause when you generate a <|citation|> so I can " \
-                     "provide the actual citation. When you feel your task is complete, " \
-                     "please indicate this by generating <|end_section|>."
+                     "placeholder. When you feel your task is complete, " \
+                     "you must indicate this by generating <|end_section|>."
 
     # return f"{initial_prompt}\nTitle: {title}\nAbstract: {abstract}\n{existing_part}"
     return f"{initial_prompt}\n{existing_part}"
