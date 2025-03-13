@@ -154,8 +154,36 @@ def single_item_eval(generation_model, retrieval_model, corpus_data, item):
     output_text = single_complete(generation_model, retrieval_model, corpus_data, title, abstract, existing_content)
     while len(output_text) < 10000 and "<|end_section|>" not in output_text:
         output_text = single_complete(generation_model, retrieval_model, corpus_data, title, abstract, output_text)
+    return output_text
 
 
+def load_eval_data():
+    with open("../data/eval_re_data_1k_0225.json", "r") as fi:
+        eval_data = json.load(fi)
+    return eval_data
 
 
+def eval_qwen_generation(model_path):
+    output_path = "../data/qwen_7b_eval_generation_result_re_0313.json"
+    eval_data = load_eval_data()
+    eval_data = eval_data[:10]
+    llm, sampling_params = load_vllm_model(model_path)
+    generation_model = (llm, sampling_params)
 
+    retriever, look_up, model, tokenizer = load_retriever()
+    retrieval_model = (retriever, look_up, model, tokenizer)
+
+    corpus_data = load_corpus_data("../local_data/corpus_data_arxiv_1215.jsonl")
+
+    res = []
+    for i, each in tqdm(enumerate(eval_data)):
+        output_text = single_item_eval(generation_model, retrieval_model, corpus_data, each)
+        eval_data[i]["qwen_2.5_72b_instruct_output"] = output_text
+        res.append(eval_data[i])
+
+    with open(output_path, "w") as fo:
+        fo.write(json.dumps(res, indent=4))
+
+
+if __name__ == "__main__":
+    eval_qwen_generation("/data/yubowang/models/Qwen2.5-7B-Instruct")
