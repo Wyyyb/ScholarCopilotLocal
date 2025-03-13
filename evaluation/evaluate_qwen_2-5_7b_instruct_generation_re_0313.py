@@ -2,6 +2,7 @@ from vllm import LLM, SamplingParams
 from typing import List
 import json
 import os
+import sys
 import faiss
 import numpy as np
 import torch
@@ -12,6 +13,7 @@ from tqdm import tqdm
 from itertools import chain
 from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tevatron_retrieval.search_mistral_e5 import configure_faiss_for_gpu, load_index_and_data
 from tevatron_retrieval.search_mistral_e5 import get_query_embedding, get_detailed_instruct
 
