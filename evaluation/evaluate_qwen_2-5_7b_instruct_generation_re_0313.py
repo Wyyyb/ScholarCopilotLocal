@@ -20,7 +20,7 @@ from tevatron_retrieval.search_mistral_e5 import get_query_embedding, get_detail
 
 def load_vllm_model(model_path: str):
     try:
-        stop_words = ["</s>", "<|im_end|>", "<|endoftext|>", "<|citation|>"]
+        stop_words = ["</s>", "<|im_end|>", "<|endoftext|>"]
         # 初始化模型
         llm = LLM(
             model=model_path,
