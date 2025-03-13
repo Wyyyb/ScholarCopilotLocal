@@ -138,7 +138,7 @@ def single_complete(generation_model, retrieval_model, corpus_data, existing_con
     prompt = format_prompt(existing_content)
     llm, sampling_params = generation_model
     output_text = batch_predict(llm, sampling_params, [prompt])
-    output_text = output_text[0]
+    output_text = prompt + output_text[0]
     start_index = output_text.find("<|citation|>")
     curr_text = output_text[:start_index]
     last_sen = find_last_complete_sentence(curr_text)
