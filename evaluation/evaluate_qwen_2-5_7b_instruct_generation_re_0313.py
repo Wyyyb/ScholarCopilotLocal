@@ -85,7 +85,6 @@ Here is the existing content:
     return initial_prompt
 
 
-
 def load_retriever():
     index_files = glob.glob("/home/xueguangma/arxiv-llm/tevatron_retrieval/corpus*.pkl")  # Replace with actual path
     retriever, look_up = load_index_and_data(index_files)
@@ -143,11 +142,11 @@ def find_last_complete_sentence(text):
 
 def single_complete(generation_model, retrieval_model, corpus_data, existing_content):
     prompt = format_prompt(existing_content)
-    print("prompt", prompt)
+    # print("prompt", prompt)
     llm, sampling_params = generation_model
     output_text = batch_predict(llm, sampling_params, [prompt])
     output_text = output_text[0]
-    print("original output_text: ", output_text)
+    # print("original output_text: ", output_text)
     while "<|citation|>" in output_text:
         start_index = output_text.find("<|citation|>")
         curr_text = output_text[:start_index]
@@ -161,8 +160,6 @@ def single_complete(generation_model, retrieval_model, corpus_data, existing_con
         generated_text = curr_text + "~\\cite{" + cite_key + "} " + next_text
         output_text = generated_text
         print("curr output_text", output_text)
-        s = input("enter")
-        print("s", s)
     return output_text
 
 
@@ -175,8 +172,8 @@ def single_item_eval(generation_model, retrieval_model, corpus_data, item):
     while "<|end_section|>" not in output_text:
         output_text = single_complete(generation_model, retrieval_model, corpus_data, input_content)
         input_content = input_content + output_text
-        print("input_content", input_content)
-        s = input("enter")
+        # print("input_content", input_content)
+        # s = input("enter")
     return input_content
 
 
