@@ -67,13 +67,13 @@ def batch_predict(llm, sampling_params, prompts: List[str]) -> List[str]:
 
 
 def format_prompt(existing_part):
-    initial_prompt = "You are a PhD student in Computer Science. I will provide you " \
-                     "with the title, abstract, and a portion of a computer science paper. " \
-                     "Please help me complete the introduction and related work sections of " \
-                     "this paper. For any citations, you must use <|citation|> as a " \
-                     "placeholder. When you feel all your task is complete, including the " \
-                     "introduction and related work sections, " \
-                     "you must indicate this by generating <|end_section|>."
+    initial_prompt = "You are a Computer Science PhD student with expertise in academic writing. " \
+                     "I will provide you with the title, abstract, and partial content of a " \
+                     "computer science research paper. Your task is to complete the Introduction " \
+                     "and the Related Work section. Use <|citation|> as a placeholder for all " \
+                     "citations. Format all sections according to standard academic writing " \
+                     "conventions. Once you have completed both sections satisfactorily, " \
+                     "indicate completion by generating <|end_section|> at the end."
 
     # return f"{initial_prompt}\nTitle: {title}\nAbstract: {abstract}\n{existing_part}"
     return f"{initial_prompt}\n{existing_part}"
