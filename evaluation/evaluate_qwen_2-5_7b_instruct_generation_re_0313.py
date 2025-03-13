@@ -160,6 +160,9 @@ def single_complete(generation_model, retrieval_model, corpus_data, existing_con
         generated_text = curr_text + "~\\cite{" + cite_key + "} " + next_text
         output_text = generated_text
         print("curr output_text", output_text)
+    if "<|end_section|>" in output_text:
+        end_index = output_text.index("<|end_section|>")
+        output_text = output_text[:end_index] + "<|end_section|>"
     return output_text
 
 
@@ -172,8 +175,8 @@ def single_item_eval(generation_model, retrieval_model, corpus_data, item):
     while "<|end_section|>" not in output_text:
         output_text = single_complete(generation_model, retrieval_model, corpus_data, input_content)
         input_content = input_content + output_text
-        # print("input_content", input_content)
-        # s = input("enter")
+        if len(output_text) <= 2:
+            break
     return input_content
 
 
