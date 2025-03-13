@@ -66,7 +66,7 @@ def batch_predict(llm, sampling_params, prompts: List[str]) -> List[str]:
         return []
 
 
-def format_prompt(title, abstract, existing_part):
+def format_prompt(existing_part):
     initial_prompt = "You are a PhD student in Computer Science. I will provide you " \
                      "with the title, abstract, and a portion of a computer science paper. " \
                      "Please help me complete the introduction and related work sections of " \
@@ -134,8 +134,8 @@ def find_last_complete_sentence(text):
     return result
 
 
-def single_complete(generation_model, retrieval_model, corpus_data, title, abstract, existing_content):
-    prompt = format_prompt(title, abstract, existing_content)
+def single_complete(generation_model, retrieval_model, corpus_data, existing_content):
+    prompt = format_prompt(existing_content)
     llm, sampling_params = generation_model
     output_text = batch_predict(llm, sampling_params, [prompt])
     output_text = output_text[0]
@@ -153,10 +153,10 @@ def single_complete(generation_model, retrieval_model, corpus_data, title, abstr
 def single_item_eval(generation_model, retrieval_model, corpus_data, item):
     title = item["title"]
     abstract = item["abstract"].replace("<|reference_start|>", "").replace("<|reference_end|>", "")
-    existing_content = "\nIntroduction\n"
-    output_text = single_complete(generation_model, retrieval_model, corpus_data, title, abstract, existing_content)
+    existing_content = f"Title: {title}\n\nAbstract: {abstract}\n\nIntroduction\n"
+    output_text = single_complete(generation_model, retrieval_model, corpus_data, existing_content)
     while len(output_text) < 10000 and "<|end_section|>" not in output_text:
-        output_text = single_complete(generation_model, retrieval_model, corpus_data, title, abstract, output_text)
+        output_text = single_complete(generation_model, retrieval_model, corpus_data, output_text)
     return output_text
 
 
