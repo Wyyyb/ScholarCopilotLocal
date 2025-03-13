@@ -145,6 +145,7 @@ def single_complete(generation_model, retrieval_model, corpus_data, existing_con
 
     retriever, look_up, model, tokenizer = retrieval_model
     retrieved_id = single_retrieve(retriever, look_up, model, tokenizer, last_sen)
+    print("corpus_data[retrieved_id]", corpus_data[retrieved_id])
     cite_key = corpus_data[retrieved_id]["citation_key"]
     generated_text = curr_text + "~\\cite{" + cite_key + "} "
     return generated_text
@@ -156,6 +157,7 @@ def single_item_eval(generation_model, retrieval_model, corpus_data, item):
     existing_content = f"Title: {title}\n\nAbstract: {abstract}\n\nIntroduction\n"
     output_text = single_complete(generation_model, retrieval_model, corpus_data, existing_content)
     while len(output_text) < 10000 and "<|end_section|>" not in output_text:
+        print("output_text ", output_text )
         output_text = single_complete(generation_model, retrieval_model, corpus_data, output_text)
     return output_text
 
