@@ -139,15 +139,18 @@ def single_complete(generation_model, retrieval_model, corpus_data, existing_con
     llm, sampling_params = generation_model
     output_text = batch_predict(llm, sampling_params, [prompt])
     output_text = output_text[0]
-    start_index = output_text.find("<|citation|>")
-    curr_text = output_text[:start_index]
-    last_sen = find_last_complete_sentence(curr_text)
+    generated_text = output_text
+    while "<|citation|>" in output_text:
+        start_index = output_text.find("<|citation|>")
+        curr_text = output_text[:start_index]
+        next_text = output_text[start_index + len("<|citation|>"): ]
+        last_sen = find_last_complete_sentence(curr_text)
 
-    retriever, look_up, model, tokenizer = retrieval_model
-    retrieved_id = single_retrieve(retriever, look_up, model, tokenizer, last_sen)
-    print("corpus_data[retrieved_id]", corpus_data[retrieved_id])
-    cite_key = corpus_data[retrieved_id]["citation_key"]
-    generated_text = curr_text + "~\\cite{" + cite_key + "} "
+        retriever, look_up, model, tokenizer = retrieval_model
+        retrieved_id = single_retrieve(retriever, look_up, model, tokenizer, last_sen)
+        print("corpus_data[retrieved_id]", corpus_data[retrieved_id])
+        cite_key = corpus_data[retrieved_id]["citation_key"]
+        generated_text = curr_text + "~\\cite{" + cite_key + "} " + next_text
     return generated_text
 
 
@@ -175,7 +178,7 @@ def load_eval_data():
 def eval_qwen_generation(model_path):
     output_path = "../data/qwen_7b_eval_generation_result_re_0313.json"
     eval_data = load_eval_data()
-    eval_data = eval_data[:10]
+    # eval_data = eval_data[:10]
     llm, sampling_params = load_vllm_model(model_path)
     generation_model = (llm, sampling_params)
 
@@ -188,11 +191,11 @@ def eval_qwen_generation(model_path):
     for i, each in tqdm(enumerate(eval_data)):
         output_text = single_item_eval(generation_model, retrieval_model, corpus_data, each)
         print("eval result:", output_text)
-        eval_data[i]["qwen_2.5_72b_instruct_output"] = output_text
+        eval_data[i]["model_output"] = output_text
         res.append(eval_data[i])
-
-    with open(output_path, "w") as fo:
-        fo.write(json.dumps(res, indent=4))
+        if len(res) % 10 == 0:
+            with open(output_path, "w") as fo:
+                fo.write(json.dumps(res, indent=4))
 
 
 if __name__ == "__main__":
