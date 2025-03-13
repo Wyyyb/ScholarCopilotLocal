@@ -143,7 +143,7 @@ def single_complete(generation_model, retrieval_model, corpus_data, existing_con
     while "<|citation|>" in output_text:
         start_index = output_text.find("<|citation|>")
         curr_text = output_text[:start_index]
-        next_text = output_text[start_index + len("<|citation|>"): ]
+        next_text = output_text[start_index + len("<|citation|>"):]
         last_sen = find_last_complete_sentence(curr_text)
 
         retriever, look_up, model, tokenizer = retrieval_model
@@ -152,6 +152,8 @@ def single_complete(generation_model, retrieval_model, corpus_data, existing_con
         cite_key = corpus_data[retrieved_id]["citation_key"]
         generated_text = curr_text + "~\\cite{" + cite_key + "} " + next_text
         output_text = generated_text
+        print("curr output_text", output_text)
+        input("enter")
     return output_text
 
 
