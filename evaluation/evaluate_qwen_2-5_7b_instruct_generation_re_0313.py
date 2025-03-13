@@ -185,6 +185,7 @@ def eval_qwen_generation(model_path):
     res = []
     for i, each in tqdm(enumerate(eval_data)):
         output_text = single_item_eval(generation_model, retrieval_model, corpus_data, each)
+        print("eval result:", output_text)
         eval_data[i]["qwen_2.5_72b_instruct_output"] = output_text
         res.append(eval_data[i])
 
