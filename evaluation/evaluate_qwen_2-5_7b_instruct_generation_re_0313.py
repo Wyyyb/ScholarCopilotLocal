@@ -70,8 +70,13 @@ def format_prompt(existing_part):
     initial_prompt = "You are a Computer Science PhD student with expertise in academic writing. " \
                      "I will provide you with the title, abstract, and partial content of a " \
                      "computer science research paper. Your task is to complete the Introduction " \
-                     "and the Related Work section. Use <|citation|> as a placeholder for all " \
-                     "citations. Format all sections according to standard academic writing " \
+                     "and the Related Work section. IMPORTANT CITATION RULES: \
+- You must use EXACTLY \"<|citation|>\" (without quotes) as the citation placeholder \
+- Do NOT modify this placeholder format \
+- Do NOT add numbers, letters, or any other characters to the placeholder \
+- INCORRECT examples: <|citation1|>, <|citation_2|>, <|citation|123> \
+- CORRECT usage: Previous work <|citation|> has shown... or Several studies <|citation|> <|citation|> demonstrate... \
+. Format all sections according to standard academic writing " \
                      "conventions. Once you have completed both sections satisfactorily, " \
                      "indicate completion by generating <|end_section|> at the end."
 
