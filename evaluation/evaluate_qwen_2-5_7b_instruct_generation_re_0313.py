@@ -20,7 +20,7 @@ from tevatron_retrieval.search_mistral_e5 import get_query_embedding, get_detail
 
 def load_vllm_model(model_path: str):
     try:
-        stop_words = ["</s>", "<|im_end|>", "<|endoftext|>"]
+        stop_words = ["</s>", "<|im_end|>", "<|endoftext|>", "<|citation|>"]
         # 初始化模型
         llm = LLM(
             model=model_path,
@@ -59,6 +59,7 @@ def batch_predict(llm, sampling_params, prompts: List[str]) -> List[str]:
         for output in outputs:
             generated_text = output.outputs[0].text
             results.append(generated_text)
+        print("Generated", results)
         return results
     except Exception as e:
         print(f"Error during prediction: {str(e)}")
