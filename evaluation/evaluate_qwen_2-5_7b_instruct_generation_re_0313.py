@@ -70,8 +70,9 @@ def format_prompt(existing_part):
     initial_prompt = "You are a PhD student in Computer Science. I will provide you " \
                      "with the title, abstract, and a portion of a computer science paper. " \
                      "Please help me complete the introduction and related work sections of " \
-                     "this paper. For any citations needed, please use <|citation|> as a " \
-                     "placeholder. When you feel your task is complete, " \
+                     "this paper. For any citations, you must use <|citation|> as a " \
+                     "placeholder. When you feel all your task is complete, including the " \
+                     "introduction and related work sections, " \
                      "you must indicate this by generating <|end_section|>."
 
     # return f"{initial_prompt}\nTitle: {title}\nAbstract: {abstract}\n{existing_part}"
