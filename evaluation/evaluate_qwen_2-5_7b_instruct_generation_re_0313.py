@@ -16,6 +16,7 @@ from transformers import AutoTokenizer, AutoModel
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from tevatron_retrieval.search_mistral_e5 import configure_faiss_for_gpu, load_index_and_data
 from tevatron_retrieval.search_mistral_e5 import get_query_embedding, get_detailed_instruct
+import time
 
 
 def load_vllm_model(model_path: str):
@@ -110,6 +111,7 @@ def load_corpus_data(corpus_data_path):
 
 def single_retrieve(retriever, look_up, model, tokenizer, query):
     task = 'Given a paper passage, retrieve the most proper paper to cite next.'
+    start = time.time()
     query = get_detailed_instruct(task, query)
     query_embedding = get_query_embedding(model, tokenizer, query)
 
@@ -119,6 +121,7 @@ def single_retrieve(retriever, look_up, model, tokenizer, query):
     documents = [look_up[i] for i in indices[0]]
     # Output Results
     print("Scores:", scores)
+    print("retrieve cost time:", time.time() - start)
     # print("Indices:", indices)
     # print("Retrieved Documents:", [look_up[i] for i in indices[0]])
     return documents[0]
