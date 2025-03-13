@@ -138,7 +138,7 @@ def single_complete(generation_model, retrieval_model, corpus_data, existing_con
     prompt = format_prompt(existing_content)
     llm, sampling_params = generation_model
     output_text = batch_predict(llm, sampling_params, [prompt])
-    output_text = prompt + output_text[0]
+    output_text = output_text[0]
     start_index = output_text.find("<|citation|>")
     curr_text = output_text[:start_index]
     last_sen = find_last_complete_sentence(curr_text)
@@ -154,12 +154,14 @@ def single_complete(generation_model, retrieval_model, corpus_data, existing_con
 def single_item_eval(generation_model, retrieval_model, corpus_data, item):
     title = item["title"]
     abstract = item["abstract"].replace("<|reference_start|>", "").replace("<|reference_end|>", "")
-    existing_content = f"Title: {title}\n\nAbstract: {abstract}\n\nIntroduction\n"
-    output_text = single_complete(generation_model, retrieval_model, corpus_data, existing_content)
-    while len(output_text) < 10000 and "<|end_section|>" not in output_text:
-        print("output_text ", output_text )
-        output_text = single_complete(generation_model, retrieval_model, corpus_data, output_text)
-    return output_text
+    input_content = f"Here is the paper:\n\nTitle: {title}\n\nAbstract: {abstract}\n\nIntroduction\n"
+    output_text = single_complete(generation_model, retrieval_model, corpus_data, input_content)
+    while len(input_content) < 10000 and "<|end_section|>" not in output_text:
+        output_text = single_complete(generation_model, retrieval_model, corpus_data, input_content)
+        input_content = input_content + output_text
+    start_index = input_content.index("Here is the paper:\n\nTitle: ") + len("Here is the paper:\n\n")
+    generated_content = input_content[start_index:]
+    return generated_content
 
 
 def load_eval_data():
