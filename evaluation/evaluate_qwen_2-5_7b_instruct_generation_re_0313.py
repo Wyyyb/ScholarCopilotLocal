@@ -52,7 +52,7 @@ def batch_predict(llm, sampling_params, prompts: List[str]) -> List[str]:
         print("llm, sampling_params are None")
         return []
     try:
-        print("Processing", len(prompts))
+        # print("Processing prompts:", prompts)
         outputs = llm.generate(prompts, sampling_params)
         # 提取生成的文本
         results = []
@@ -136,6 +136,7 @@ def find_last_complete_sentence(text):
 
 def single_complete(generation_model, retrieval_model, corpus_data, existing_content):
     prompt = format_prompt(existing_content)
+    print("prompt", prompt)
     llm, sampling_params = generation_model
     output_text = batch_predict(llm, sampling_params, [prompt])
     output_text = output_text[0]
@@ -153,23 +154,22 @@ def single_complete(generation_model, retrieval_model, corpus_data, existing_con
         generated_text = curr_text + "~\\cite{" + cite_key + "} " + next_text
         output_text = generated_text
         print("curr output_text", output_text)
-        input("enter")
+        s = input("enter")
+        print("s", s)
     return output_text
 
 
 def single_item_eval(generation_model, retrieval_model, corpus_data, item):
     title = item["title"]
     abstract = item["abstract"].replace("<|reference_start|>", "").replace("<|reference_end|>", "")
-    input_content = f"Here is the paper:\n\nTitle: {title}\n\nAbstract: {abstract}\n\nIntroduction\n"
+    input_content = f"Title: {title}\n\nAbstract: {abstract}\n\nIntroduction\n"
     output_text = single_complete(generation_model, retrieval_model, corpus_data, input_content)
     input_content = input_content + output_text
     while len(input_content) < 10000 and "<|end_section|>" not in output_text:
         output_text = single_complete(generation_model, retrieval_model, corpus_data, input_content)
         input_content = input_content + output_text
         print("input_content", input_content)
-    start_index = input_content.index("Here is the paper:\n\nTitle: ") + len("Here is the paper:\n\n")
-    generated_content = input_content[start_index:]
-    return generated_content
+    return input_content
 
 
 def load_eval_data():
