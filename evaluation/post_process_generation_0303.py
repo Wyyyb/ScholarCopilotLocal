@@ -9,8 +9,10 @@ def main():
     # output_path = "../data/sc_ul_eval_result_0303.json"
     # input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/sc_2k_output"
     # output_path = "../data/sc_2k_eval_result_0303.json"
-    input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/qwen_7b_gt_output"
-    output_path = "../data/qwen_7b_gt_eval_result_0303.json"
+    input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/qwen_72b_re_output/"
+    output_path = "../data/qwen_72b_re_eval_result_0314.json"
+    # input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/qwen_7b_re_output/"
+    # output_path = "../data/qwen_7b_re_eval_result_0314.json"
     input_data = []
     for file in os.listdir(input_dir):
         file_path = os.path.join(input_dir, file)
@@ -25,7 +27,8 @@ def main():
                 "abstract": each["abstract"],
                 "paper": each["paper"],
                 # "generated_text": each.get("qwen_2.5_72b_instruct_output", each.get("sc_generated_text", None)),
-                "generated_text": each.get("qwen_2.5_7b_instruct_output", each.get("sc_generated_text", None)),
+                "generated_text": each.get("qwen_2.5_7b_instruct_output",
+                                           each.get("sc_generated_text", each.get("model_output", None))),
                 "gpt4o_output": each["model_output"],
                 "score": each["score"],
                 "cost": each["cost"]}
