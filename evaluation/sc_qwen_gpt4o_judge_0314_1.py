@@ -117,6 +117,10 @@ def example_prompt_func(item):
     generated_text = item.get("sc_generated_text", item.get("model_output", None))
     if not generated_text:
         print("generated_text is empty")
+        return None
+    if len(generated_text) > 50000:
+        print("cut off too long")
+        generated_text = generated_text[:50000]
     prompt = generate_evaluation_prompt(title, abstract, generated_text, ground_truth)
     chat_prompt = [
         {
