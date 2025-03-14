@@ -114,7 +114,7 @@ def example_prompt_func(item):
     title = item["title"]
     abstract = item["abstract"].replace("<|reference_start|>", "").replace("<|reference_end|>", "")
     ground_truth = item["paper"]
-    generated_text = item.get("sc_generated_text", item.get("qwen_2.5_7b_instruct_output", None))
+    generated_text = item.get("sc_generated_text", item.get("model_output", None))
     if not generated_text:
         print("generated_text is empty")
     prompt = generate_evaluation_prompt(title, abstract, generated_text, ground_truth)
