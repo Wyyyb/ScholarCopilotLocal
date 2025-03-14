@@ -9,10 +9,10 @@ def main():
     # output_path = "../data/sc_ul_eval_result_0303.json"
     # input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/sc_2k_output"
     # output_path = "../data/sc_2k_eval_result_0303.json"
-    # input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/qwen_72b_re_output/"
-    # output_path = "../data/qwen_72b_re_eval_result_0314.json"
-    input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/qwen_7b_re_output/"
-    output_path = "../data/qwen_7b_re_eval_result_0314.json"
+    input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/qwen_72b_re_output/"
+    output_path = "../data/qwen_72b_re_eval_result_0314.json"
+    # input_dir = "/data/yubowang/ScholarCopilotLocal/evaluation/qwen_7b_re_output/"
+    # output_path = "../data/qwen_7b_re_eval_result_0314.json"
     input_data = []
     for file in os.listdir(input_dir):
         file_path = os.path.join(input_dir, file)
