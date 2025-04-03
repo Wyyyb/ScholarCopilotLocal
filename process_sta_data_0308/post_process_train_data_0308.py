@@ -50,12 +50,14 @@ def filter_train_data(eval_data, train_data):
 
 
 def main():
-    train_data_output_path = "../data/scholar_copilot_train_data.json"
+    train_data_output_path = "../data/scholar_copilot_train_data_500k.json"
     train_data = load_train_data()
     print("ori train data number", len(train_data))
     eval_data = load_eval_data()
     print("ori eval data number", len(eval_data))
     train_res_data = filter_train_data(eval_data, train_data)
+    print("len(train_res_data)", len(train_res_data))
+    train_res_data = train_res_data[:500000]
     print("len(train_res_data)", len(train_res_data))
     with open(train_data_output_path, "w") as fo:
         fo.write(json.dumps(train_res_data, indent=4))
